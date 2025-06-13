@@ -1,0 +1,10 @@
+build/
+DerivedData/
+*.xcworkspace
+!default.xcworkspace
+*.xcuserdata
+*.xccheckout
+*.xcscmblueprint
+
+xcshareddata/
+xcuserdata/
