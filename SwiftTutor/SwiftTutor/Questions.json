@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "questionText": "Given the code snippet below, what will be printed in the console?",
+    "infoMarkdown": "```swift\nvar someInt = 6\nlet closure = { print(someInt) }\nclosure()\nsomeInt = 12\nclosure()\n```",
+    "options": [
+      "6, 6",
+      "6, 12",
+      "12, 6",
+      "12, 12"
+    ],
+    "correctIndex": 1,
+    "helpPromptMarkdown": "A closure in Swift captures variables by reference. Even though `closure` is defined before `someInt` changes, each call to `closure()` prints the current value of `someInt`."
+  },
+  {
+  "id": 2,
+  "questionText": "What is the print order for the following code using defer?",
+  "infoMarkdown": "```swift\nfunc demo() {\nprint(\"A\")\ndefer { print(\"B\") }\ndefer { print(\"C\") }\nprint(\"D\")\n}\n\ndemo()\n```",
+  "options": [
+  "A D C B",
+  "A D B C",
+  "B C A D",
+  "C B D A"
+  ],
+  "correctIndex": 0,
+  "helpPromptMarkdown": "defer blocks run in LIFO order just before the function returns. The function prints A, then D, and finally the deferred blocks execute as C then B, yielding A D C B."
+  },
+  {
+    "id": 3,
+    "questionText": "What will be printed by the code below?",
+    "infoMarkdown": "```swift\nstruct X { \nvar value: Int \n}\nvar x0 = X(value: 5)\nvar x1 = x0\nx1.value = 10\nprint(x0.value)\n```",
+    "options": [
+      "5",
+      "10",
+      "Compile‐time error",
+      "Undefined"
+    ],
+    "correctIndex": 0,
+    "helpPromptMarkdown": "In Swift, `struct` is a value type. Assigning `x0` to `x1` copies it. Changing `x1.value` does not affect `x0.value`, so `x0.value` remains 5."
+  },
+  {
+    "id": 4,
+    "questionText": "What will the following Swift code print?",
+    "infoMarkdown": "```swift\nlet numbers = [1, 2, 3, 4]\nlet result = numbers.map { $0 * 2 }.filter { $0 > 4 }\nprint(result)\n```",
+    "options": [
+      "[2, 4]",
+      "[2, 4, 6, 8]",
+      "[6, 8]",
+      "[1, 2, 3, 4]"
+    ],
+    "correctIndex": 2,
+    "helpPromptMarkdown": "`map { $0 * 2 }` doubles each element, producing `[2, 4, 6, 8]`. The `filter { $0 > 4 }` keeps only values greater than 4, giving `[6, 8]`."
+  },
+  {
+    "id": 5,
+    "questionText": "What is printed by the following code?",
+    "infoMarkdown": "```swift\nvar x: Int = 0 {\n    willSet { print(\"Will set to \\(newValue)\") }\n    didSet { print(\"Did set from \\(oldValue)\") }\n}\nx = 10\n```",
+    "options": [
+      "\"Will set to 10\"",
+      "\"Will set to 10\" then \"Did set from 0\"",
+      "\"Did set from 0\" then \"Will set to 10\"",
+      "No output"
+    ],
+    "correctIndex": 1,
+    "helpPromptMarkdown": "`willSet` is called just before the property is set (printing \"Will set to 10\"), then `didSet` is called after (printing \"Did set from 0\")."
+  },
+  {
+    "id": 6,
+    "questionText": "Given this enum, what is printed by `print(Color.blue.rawValue)`?",
+    "infoMarkdown": "```swift\nenum Color: Int {\n    case red\n    case green\n    case blue\n}\n```",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "Compile‐time error"
+    ],
+    "correctIndex": 2,
+    "helpPromptMarkdown": "By default, Swift assigns raw `Int` values starting at 0. So `red` is 0, `green` is 1, and `blue` is 2."
+  },
+  {
+    "id": 7,
+    "questionText": "Which of these is the correct way to instantiate a generic function in Swift?",
+    "infoMarkdown": "```swift\nfunc swapValues<T>(_ a: inout T, _ b: inout T) { ... }\n```",
+    "options": [
+      "`swapValues(&x, &y)`",
+      "`swapValues<T>(&x, &y)`",
+      "`swapValues(&x : T, &y : T)`",
+      "`swapValues(of: Int, &x, &y)`"
+    ],
+    "correctIndex": 0,
+    "helpPromptMarkdown": "Swift infers the type parameter from the arguments, so you simply call `swapValues(&x, &y)`."
+  },
+  {
+    "id": 8,
+    "questionText": "What is the result of `print(myString?.uppercased() ?? \"N/A\")` if `myString` is `nil`?",
+    "infoMarkdown": "",
+    "options": [
+      "\"N/A\"",
+      "\"nil\"",
+      "\"\"",
+      "Runtime error"
+    ],
+    "correctIndex": 0,
+    "helpPromptMarkdown": "Optional chaining returns `nil` if `myString` is nil. The `??` operator then supplies \"N/A\" as a default."
+  },
+  {
+    "id": 9,
+    "questionText": "Given this function below, which is the correct trailing‐closure call to `doWork`?",
+    "infoMarkdown": "```swift\nfunc doWork(completion: (Int) -> Void) { /* ... */ }\n```",
+    "options": [
+      "`doWork(completion: { value in print(value) })`",
+      "`doWork() { value in print(value) }`",
+      "`doWork { (Int) in print(Int) }`",
+      "`doWork { value -> Void print(value) }`"
+    ],
+    "correctIndex": 1,
+    "helpPromptMarkdown": "With trailing closure syntax, you omit the parentheses entirely: `doWork { value in print(value) }`. Option 2 is correct since the function has no other parameters."
+  },
+  {
+    "id": 10,
+    "questionText": "Which of these key path types correctly refers to a `String` property named `name` on a `Person` struct for read-only?",
+    "infoMarkdown": "",
+    "options": [
+      "`KeyPath<Person, String?>`",
+      "`KeyPath<Person, String>`",
+      "`WritableKeyPath<Person, String>`",
+      "`ReferenceWritableKeyPath<Person, String>`"
+    ],
+    "correctIndex": 1,
+    "helpPromptMarkdown": "A read‐only key path to a non‐optional `String` property is `KeyPath<Person, String>`. The others either expect an optional or a class reference."
+  }
+]
