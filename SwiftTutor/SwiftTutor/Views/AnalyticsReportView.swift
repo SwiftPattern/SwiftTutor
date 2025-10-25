@@ -2,10 +2,11 @@ import SwiftUI
 
 struct AnalyticsReportView: View {
     
-    @ObservedObject private var viewModel: AnalyticsReportViewModel
+    @StateObject private var viewModel: AnalyticsReportViewModel
 
-    init(viewModel: AnalyticsReportViewModel) {
-        self.viewModel = viewModel
+    init(statisticsService: StatisticsService) {
+        let analyticsVM = AnalyticsReportViewModel(statisticsService: statisticsService)
+        _viewModel = StateObject(wrappedValue: analyticsVM)
     }
 
     var body: some View {

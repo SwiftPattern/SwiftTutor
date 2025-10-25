@@ -1,8 +1,22 @@
 import SwiftUI
 
 struct QuestionView: View {
-    @ObservedObject var viewModel: QuestionViewModel
+    @StateObject var viewModel: QuestionViewModel
     @State private var helpSheetText: String?
+
+    init(
+        questionService: QuestionService, settingService: SettingsService,
+        statsService: StatisticsService, appState: AppState
+    ) {
+        let questionVM = QuestionViewModel(
+            questionService: questionService,
+            settingsService: settingService,
+            statsService: statsService,
+            appState: appState
+        )
+
+        _viewModel = StateObject(wrappedValue: questionVM)
+    }
 
     var body: some View {
         VStack(spacing: 16) {
@@ -85,12 +99,12 @@ struct QuestionView: View {
             }
         }
         .sheet(isPresented: $viewModel.showHelp, onDismiss: {
-                helpSheetText = nil   // clear for next time
-            }) {
-                HelpView(markdownText: helpSheetText ?? "No help available.") {
-                    viewModel.toggleHelp()
-                }
+            helpSheetText = nil   // clear for next time
+        }) {
+            HelpView(markdownText: helpSheetText ?? "No help available.") {
+                viewModel.toggleHelp()
             }
+        }
         // MARK: - Answer Feedback Overlay
         .overlay {
             if viewModel.showAnswerFeedback {

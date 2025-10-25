@@ -1,15 +1,30 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var analyticsViewModel: AnalyticsReportViewModel
-    @EnvironmentObject var questionViewModel: QuestionViewModel
-    @EnvironmentObject var settingsService: SettingsService
+    @ObservedObject var settingsService: SettingsService
+    @ObservedObject var statisticsService: StatisticsService
+    @ObservedObject var appState: AppState
+    @ObservedObject var questionService: QuestionService
+
+    init(
+        settingsService: SettingsService,
+        statisticsService: StatisticsService,
+        appState: AppState,
+        questionService: QuestionService
+    ) {
+        self.settingsService = settingsService
+        self.statisticsService = statisticsService
+        self.appState = appState
+        self.questionService = questionService
+    }
 
     var body: some View {
         TabView(selection: $appState.selectedTab) {
             NavigationStack {
-                QuestionView(viewModel: questionViewModel)
+                QuestionView(
+                    questionService: questionService, settingService: settingsService,
+                    statsService: statisticsService, appState: appState
+                )
             }
             .tabItem {
                 Label("Quiz", systemImage: "questionmark.circle")
@@ -17,7 +32,7 @@ struct MainTabView: View {
             .tag(AppTab.quiz)
 
             NavigationStack {
-                AnalyticsReportView(viewModel: analyticsViewModel)
+                AnalyticsReportView(statisticsService: statisticsService)
             }
             .tabItem {
                 Label("Analytics", systemImage: "chart.bar")
